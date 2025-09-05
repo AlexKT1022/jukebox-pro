@@ -11,9 +11,10 @@ const getUserFromToken = async (req, res, next) => {
     const { id } = verifyToken(token);
     const user = await getUserById(id);
     req.user = user;
+
     next();
   } catch {
-    res.status(401).send('Invalid token.');
+    return res.status(401).send('Invalid token.');
   }
 };
 
