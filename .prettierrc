@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "dataTypeCase": "upper",
+  "keywordCase": "upper",
+  "language": "postgresql",
+  "plugins": [
+    "prettier-plugin-embed",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-pkg",
+    "prettier-plugin-sql"
+  ]
+}
