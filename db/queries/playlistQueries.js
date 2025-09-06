@@ -42,16 +42,16 @@ export const getRandomPlaylist = async () => {
   return rows[0];
 };
 
-export const createPlaylist = async (name, description) => {
+export const createPlaylist = async (name, description, ownerId) => {
   const sql = `
     INSERT INTO
-      playlists (name, description)
+      playlists (name, description, owner_id)
     VALUES
-      ($1, $2)
+      ($1, $2, $3)
     RETURNING
       *
   `;
-  const { rows } = await db.query(sql, [name, description]);
+  const { rows } = await db.query(sql, [name, description, ownerId]);
 
   return rows[0];
 };
