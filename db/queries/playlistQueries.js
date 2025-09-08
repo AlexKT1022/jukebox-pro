@@ -1,13 +1,31 @@
 import db from '#db/client';
 
-export const getPlaylists = async () => {
+export const getPlaylistsByUserId = async (userId) => {
   const sql = `
     SELECT
       *
     FROM
       playlists
+    WHERE
+      owner_id = $1
   `;
-  const { rows } = await db.query(sql);
+  const { rows } = await db.query(sql, [userId]);
+
+  return rows;
+};
+
+export const getPlaylistsByTrackId = async (trackId) => {
+  const sql = `
+    SELECT
+      playlists.*
+    FROM
+      playlist_tracks
+      JOIN playlists ON playlists.id = playlist_tracks.playlist_id
+      JOIN tracks ON tracks.id = playlist_tracks.track_id
+    WHERE
+      playlist_tracks.track_id = $1;
+  `;
+  const { rows } = await db.query(sql, [trackId]);
 
   return rows;
 };

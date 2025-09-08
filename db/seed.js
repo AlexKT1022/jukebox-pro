@@ -12,7 +12,9 @@ const generateUsers = async (numUsers = 2) => {
   while (usersToAdd > 0) {
     try {
       const username = faker.internet.username().toLowerCase();
-      const password = `${faker.word.words({ count: { min: 1, max: 2 } }).replaceAll(' ', '')}${faker.string.numeric({ length: { min: 0, max: 3 } })}`;
+      const password =
+        faker.word.words({ count: { min: 1, max: 2 } }).replaceAll(' ', '') +
+        faker.string.numeric({ length: { min: 0, max: 3 } });
 
       await createUser(username, password);
 

@@ -1,18 +1,23 @@
 import express from 'express';
-const app = express();
-export default app;
-
 import morgan from 'morgan';
 
-import playlistsRouter from '#api/playlists';
-import tracksRouter from '#api/tracks';
+import playlistsRouter from '#api/playlistsRouter';
+import tracksRouter from '#api/tracksRouter';
+import usersRouter from '#api/usersRouter';
+import getUserFromToken from '#middleware/getUserFromToken';
+
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(morgan('dev'));
 
-app.use('/tracks', tracksRouter);
+app.use(getUserFromToken);
+
 app.use('/playlists', playlistsRouter);
+app.use('/tracks', tracksRouter);
+app.use('/users', usersRouter);
 
 app.use((err, req, res, next) => {
   // A switch statement can be used instead of if statements
@@ -36,3 +41,5 @@ app.use((err, req, res, next) => {
 
   return res.status(500).send('Sorry! Something went wrong.');
 });
+
+export default app;
